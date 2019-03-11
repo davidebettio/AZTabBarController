@@ -169,6 +169,13 @@ public class AZTabBarController: UIViewController {
         }
     }
     
+    /// The position of the selection indicator
+    open var selectionIndicatorOnBottom:Bool = true {
+        didSet{
+            updateInterfaceIfNeeded()
+        }
+    }
+    
     /// Set the tab bar height.
     open var tabBarHeight: CGFloat{
         get{
@@ -1124,7 +1131,11 @@ fileprivate extension AZTabBarController {
         selectionIndicatorLeadingConstraint.isActive = true
         selectionIndicator.widthAnchor.constraint(equalTo: buttons[0].widthAnchor, multiplier: 1.0).isActive = true
         selectionIndicatorHeightConstraint.isActive = true
-        selectionIndicator.bottomAnchor.constraint(equalTo: buttonsStackView.bottomAnchor).isActive = true
+        if (selectionIndicatorOnBottom) {
+            selectionIndicator.bottomAnchor.constraint(equalTo: buttonsStackView.bottomAnchor).isActive = true
+        } else {
+            selectionIndicator.topAnchor.constraint(equalTo: buttonsStackView.topAnchor).isActive = true
+        }
     }
     
     func setupConstraints(forChildController controller: UIViewController) {
